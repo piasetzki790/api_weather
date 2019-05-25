@@ -1,14 +1,24 @@
 class BuscarTempoController < ApplicationController
-    require 'net/http'
-    require 'json'
-
-    def clima
-        render json: ComunicacaoViatempo.new.clima(clima_params[:clima])
-    end
     
-    private 
-
-    def clima_params
-        params.permit(:clima)
+    
+    def buscar_atual
+        render json: ComunicacaoTempo.new.buscar(cidade_params[:cidade]), status: :ok
     end
+
+    def buscar_proximas_horas
+        render json: ComunicacaoPH.new.buscar(cidade_params[:cidade]), status: :ok
+    end
+
+    def buscar_proximos_dias
+        render json: ComunicacaoPD.new.buscar(cidade_params[:cidade]), status: :ok 
+    end
+     
+    private
+
+    def cidade_params
+        params.permit(:cidade)
+    end
+   
+        
+    
 end
